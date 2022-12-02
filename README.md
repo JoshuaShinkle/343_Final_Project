@@ -1,3 +1,3 @@
 # 343 Final Project
 
-## Time Invested: 50 min
+Time Invested: 1 hr
