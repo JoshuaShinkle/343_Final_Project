@@ -1,0 +1,55 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "rescripts start",
+    "build": "rescripts build",
+    "test": "rescripts test",
+    "eject": "rescripts eject",
+    "api-watch": "nodemon --ignore ./node_modules hapi-server.js"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@fontsource/roboto": "^4.5.8",
+    "@hapi/hapi": "^21.1.0",
+    "@mui/material": "^5.10.17",
+    "@nextui-org/react": "^1.0.0-beta.10",
+    "axios": "^1.2.1",
+    "blipp": "^4.0.2",
+    "bootstrap": "^4.4.1",
+    "hapi": "^18.1.0",
+    "hapi-pino": "^11.0.1",
+    "joi": "^17.7.0",
+    "knex": "^2.3.0",
+    "namor": "^1.1.2",
+    "nodemon": "^2.0.20",
+    "objection": "^3.0.1",
+    "pg": "^8.8.0",
+    "react": "17.0.0",
+    "react-bootstrap": "^1.0.0-beta.16",
+    "react-dom": "17.0.0",
+    "react-scripts": "4.0.0",
+    "react-table": "latest",
+    "use-dark-mode": "^2.3.1"
+  },
+  "devDependencies": {
+    "@rescripts/cli": "^0.0.11",
+    "@rescripts/rescript-use-babel-config": "^0.0.8",
+    "@rescripts/rescript-use-eslint-config": "^0.0.9",
+    "customize-cra": "^1.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "react-app-rewired": "^2.2.1"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
