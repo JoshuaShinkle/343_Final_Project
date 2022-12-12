@@ -1,10 +1,10 @@
 const knex = require("knex")({
     client: "pg",
     connection: {
-        host: "localhost",
+        host: "roller.cse.taylor.edu",
         // port: 5432,
-        user: "postgres",
-        password: "postgres",
+        user: "heroscape",
+        password: "heroscape",
         database: "heroscape",
     },
 });
