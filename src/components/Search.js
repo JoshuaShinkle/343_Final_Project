@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { allCharacters } from "../api/objects/allCharacters";
+import { firstBy } from "thenby";
 import {
     Navbar,
     Button,
@@ -43,7 +44,7 @@ export const Search = () => {
     const [filterMove, setFilterMove] = useState([0, 10]);
     const [filterLife, setFilterLife] = useState([0, 9]);
     const [filterHeight, setFilterHeight] = useState([2, 17]);
-    const [searchValue, setSearchValue] = useState({});
+    const [searchValue, setSearchValue] = useState("");
     const [visible, setVisible] = useState(false);
     const [modalItem, setModalItem] = useState({});
 
@@ -71,37 +72,30 @@ export const Search = () => {
 
     const handleChangeAttackDice = (event, newValue) => {
         setFilterAttackDice(newValue);
-        setSearchValue("");
     };
 
     const handleChangeDefenseDice = (event, newValue) => {
         setFilterDefenseDice(newValue);
-        setSearchValue("");
     };
 
     const handleChangePoints = (event, newValue) => {
         setFilterPoints(newValue);
-        setSearchValue("");
     };
 
     const handleChangeRange = (event, newValue) => {
         setFilterRange(newValue);
-        setSearchValue("");
     };
 
     const handleChangeMove = (event, newValue) => {
         setFilterMove(newValue);
-        setSearchValue("");
     };
 
     const handleChangeLife = (event, newValue) => {
         setFilterLife(newValue);
-        setSearchValue("");
     };
 
     const handleChangeHeight = (event, newValue) => {
         setFilterHeight(newValue);
-        setSearchValue("");
     };
 
     const resetInputs = () => {
@@ -112,6 +106,7 @@ export const Search = () => {
         setFilterMove([0, 10]);
         setFilterLife([0, 9]);
         setFilterHeight([2, 17]);
+        setSearchValue("");
     };
 
     const closeHandler = () => {
@@ -133,176 +128,172 @@ export const Search = () => {
             character.life >= filterLife[0] &&
             character.life <= filterLife[1] &&
             character.height >= filterHeight[0] &&
-            character.height <= filterHeight[1]
-            // character.name.includes(searchValue)
+            character.height <= filterHeight[1] &&
+            character.name.toLowerCase().includes(searchValue.toLowerCase())
         );
     };
 
     return (
         <div>
-            <Col>
-                <Text>{searchValue ? searchValue.name : ""}</Text>
-                {/* <Autocomplete
-                    selectOnFocus
-                    onChange={(event, newValue) => {
-                        newValue
-                            ? setSearchValue(newValue.name)
-                            : setSearchValue("");
-                    }}
-                    disablePortal
-                    options={chars}
-                    getOptionLabel={(option) => option.name}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Search" />
-                    )}
-                /> */}
-                <TextField
-                    id="outlined-basic"
-                    label="Outlined"
-                    variant="outlined"
-                    onChange={(event) => {
-                        console.log(event.target.value);
-                        // newValue
-                        //     ? setSearchValue(newValue)
-                        //     : setSearchValue("");
-                    }}
-                />
-                <Text>Attack Dice</Text>
-                <Slider
-                    value={filterAttackDice}
-                    defaultValue={[1, 8]}
-                    onChange={handleChangeAttackDice}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks
-                    min={1}
-                    max={8}
-                />
+            <Grid.Container gap={1} justify="center">
+                <Grid>
+                    <Text>Attack Dice</Text>
+                    <Slider
+                        value={filterAttackDice}
+                        defaultValue={[1, 8]}
+                        onChange={handleChangeAttackDice}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        marks
+                        min={1}
+                        max={8}
+                    />
 
-                <Text>Defense Dice</Text>
-                <Slider
-                    value={filterDefenseDice}
-                    defaultValue={[0, 9]}
-                    onChange={handleChangeDefenseDice}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    marks
-                    min={0}
-                    max={9}
-                />
+                    <Text>Defense Dice</Text>
+                    <Slider
+                        value={filterDefenseDice}
+                        defaultValue={[0, 9]}
+                        onChange={handleChangeDefenseDice}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        marks
+                        min={0}
+                        max={9}
+                    />
 
-                <Text>Points</Text>
-                <Slider
-                    value={filterPoints}
-                    defaultValue={[0, 370]}
-                    onChange={handleChangePoints}
-                    valueLabelDisplay="auto"
-                    step={5}
-                    min={0}
-                    max={370}
-                />
+                    <Text>Points</Text>
+                    <Slider
+                        value={filterPoints}
+                        defaultValue={[0, 370]}
+                        onChange={handleChangePoints}
+                        valueLabelDisplay="auto"
+                        step={5}
+                        min={0}
+                        max={370}
+                    />
 
-                <Text>Range</Text>
-                <Slider
-                    value={filterRange}
-                    defaultValue={[0, 10]}
-                    onChange={handleChangeRange}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={0}
-                    marks
-                    max={10}
-                />
+                    <Text>Range</Text>
+                    <Slider
+                        value={filterRange}
+                        defaultValue={[0, 10]}
+                        onChange={handleChangeRange}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={0}
+                        marks
+                        max={10}
+                    />
 
-                <Text>Move</Text>
-                <Slider
-                    value={filterMove}
-                    defaultValue={[0, 8]}
-                    onChange={handleChangeMove}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={0}
-                    marks
-                    max={8}
-                />
+                    <Text>Move</Text>
+                    <Slider
+                        value={filterMove}
+                        defaultValue={[0, 8]}
+                        onChange={handleChangeMove}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={0}
+                        marks
+                        max={8}
+                    />
 
-                <Text>Life</Text>
-                <Slider
-                    value={filterLife}
-                    defaultValue={[0, 9]}
-                    onChange={handleChangeLife}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={1}
-                    marks
-                    max={9}
-                />
+                    <Text>Life</Text>
+                    <Slider
+                        value={filterLife}
+                        defaultValue={[0, 9]}
+                        onChange={handleChangeLife}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={1}
+                        marks
+                        max={9}
+                    />
 
-                <Text>Height</Text>
-                <Slider
-                    value={filterHeight}
-                    defaultValue={[2, 17]}
-                    onChange={handleChangeHeight}
-                    valueLabelDisplay="auto"
-                    step={1}
-                    min={2}
-                    marks
-                    max={17}
-                />
-                <Button onPress={resetInputs}>Reset search constraints</Button>
-                <Text>
-                    {
-                        chars.filter((character) => isValidCharacter(character))
-                            .length
-                    }{" "}
-                    results
-                </Text>
-            </Col>
-            <Col></Col>
-
-            <Grid.Container gap={2} justify="flex-start">
-                {chars
-                    .filter((character) => isValidCharacter(character))
-                    .map((item, index) => (
-                        <Grid xs={6} sm={3} key={index}>
-                            <Card
-                                isPressable
-                                isHoverable
-                                onPress={handler.bind(this, item)}
-                            >
-                                <Card.Body css={{ p: 0 }}>
-                                    <Card.Image
-                                        src={item.image_address}
-                                        objectFit="cover"
-                                        width={500}
-                                        height="100%"
-                                        alt={item.name}
-                                    />
-                                </Card.Body>
-                                <Card.Footer
-                                    css={{ justifyItems: "flex-start" }}
-                                >
-                                    <Row
-                                        wrap="wrap"
-                                        justify="space-between"
-                                        align="center"
+                    <Text>Height</Text>
+                    <Slider
+                        value={filterHeight}
+                        defaultValue={[2, 17]}
+                        onChange={handleChangeHeight}
+                        valueLabelDisplay="auto"
+                        step={1}
+                        min={2}
+                        marks
+                        max={17}
+                    />
+                    <TextField
+                        value={searchValue}
+                        id="outlined-basic"
+                        label="Search"
+                        variant="outlined"
+                        onChange={(event) => {
+                            console.log(event.target.value);
+                            setSearchValue(event.target.value);
+                        }}
+                    />
+                    <Spacer y={1} />
+                    <Button onPress={resetInputs}>
+                        Reset search constraints
+                    </Button>
+                    <Text>
+                        {
+                            chars.filter((character) =>
+                                isValidCharacter(character)
+                            ).length
+                        }{" "}
+                        results
+                    </Text>
+                </Grid>
+                <Grid lg={10}>
+                    <Grid.Container gap={2} justify="flex-start">
+                        {chars
+                            .filter((character) => isValidCharacter(character))
+                            // .sort(
+                            //     (a, b) => b.num_attack_dice - a.num_attack_dice
+                            // )
+                            .map((item, index) => (
+                                <Grid xs={6} sm={4} md={4} lg={3} key={index}>
+                                    <Card
+                                        css={{
+                                            mw: "500px",
+                                            mh: "350px",
+                                        }}
+                                        isPressable
+                                        isHoverable
+                                        onPress={handler.bind(this, item)}
                                     >
-                                        <Text b>{`${item.name}`}</Text>
-                                        <Text
-                                            css={{
-                                                color: "$accents7",
-                                                fontWeight: "$semibold",
-                                                fontSize: "$sm",
-                                            }}
+                                        <Card.Body css={{ p: 0 }}>
+                                            <Card.Image
+                                                src={item.image_address}
+                                                objectFit="cover"
+                                                width={500}
+                                                height="100%"
+                                                alt={item.name}
+                                            />
+                                        </Card.Body>
+                                        <Card.Footer
+                                            css={{ justifyItems: "flex-start" }}
                                         >
-                                            {item.name}
-                                        </Text>
-                                    </Row>
-                                </Card.Footer>
-                            </Card>
-                        </Grid>
-                    ))}
+                                            <Row
+                                                wrap="wrap"
+                                                justify="space-between"
+                                                align="center"
+                                            >
+                                                <Text b>{`${item.name}`}</Text>
+                                                <Text
+                                                    css={{
+                                                        color: "$accents7",
+                                                        fontWeight: "$semibold",
+                                                        fontSize: "$sm",
+                                                    }}
+                                                >
+                                                    {item.name}
+                                                </Text>
+                                            </Row>
+                                        </Card.Footer>
+                                    </Card>
+                                </Grid>
+                            ))}
+                    </Grid.Container>
+                </Grid>
             </Grid.Container>
             <Modal
                 width="700px"

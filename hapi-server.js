@@ -60,7 +60,8 @@ const init = async () => {
                         "range",
                         "move",
                         "life",
-                        "height"
+                        "height",
+                        "unit"
                     )
                     .then((data) => {
                         console.log(data);

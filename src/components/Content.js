@@ -9,7 +9,8 @@ export const Content = () => (
             h1
             size={60}
             css={{
-                textGradient: "45deg, $blue600 40%, $pink600 100%",
+                textGradient: "45deg, $blue600 40%, $blue700 100%",
+                // textGradient: "45deg, $yellow600 -20%, $red600 100%",
                 textAlign: "center",
             }}
             weight="bold"
